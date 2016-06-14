@@ -35,6 +35,7 @@ export default class Html extends Component {
             <link href={assets.styles[style]} key={key} media="screen, projection"
                   rel="stylesheet" type="text/css" charSet="UTF-8"/>
           )}
+          <link href='https://fonts.googleapis.com/css?family=Exo+2:400,200|family=Glegoo:400,700' rel='stylesheet' type='text/css'/>
 
           {/* (will be present only in development mode) */}
           {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}

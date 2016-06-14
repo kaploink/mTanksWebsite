@@ -1,15 +1,227 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable spaced-comment */
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+
 import { CounterButton, GithubButton } from 'components';
 import config from '../../config';
 
+// 3rd party components
+import RaisedButton from 'material-ui/lib/raised-button';
+//import FlatButton from 'material-ui/lib/flat-button';
+
+
+const Avatar = require('material-ui/lib/avatar');
+const Card = require('material-ui/lib/card/card');
+const CardActions = require('material-ui/lib/card/card-actions');
+const CardHeader = require('material-ui/lib/card/card-header');
+const CardMedia = require('material-ui/lib/card/card-media');
+const CardText = require('material-ui/lib/card/card-text');
+const CardTitle = require('material-ui/lib/card/card-title');
+
+const List = require('material-ui/lib/lists/list');
+const ListItem = require('material-ui/lib/lists/list-item');
+const ListDivider = require('material-ui/lib/lists/list-divider');
+
+const ContentInbox = require('material-ui/lib/svg-icons/content/inbox');
+const ContentSend = require('material-ui/lib/svg-icons/content/send');
+const ContentDrafts = require('material-ui/lib/svg-icons/content/drafts');
+const ActionGrade = require('material-ui/lib/svg-icons/action/grade');
+const ActionInfo = require('material-ui/lib/svg-icons/action/info');
+
+const IconButton = require('material-ui/lib/icon-button');
+
+const RefreshIndicator = require('material-ui/lib/refresh-indicator');
+
+
+const styles = require('./Home.scss');
+
+const Box = ({children, style, childrenStyle, ...others}) => (
+  <div style={{
+    display: 'flex',
+    ...style
+  }} others>
+  {/*
+    children.map((child) =>
+      <child/>
+    )
+  */}
+    {children}
+  </div>
+);
+
+const StarRating = ({rating}) => (
+  <span>
+    {Array(rating).fill().map(() =>
+      <ActionGrade color="white"/>
+    )}
+  </span>
+);
+
+const FlatButton = ({children}) => (
+  <button className={styles.button}>{children}</button>
+);
+
+// child components
+import Title from './Title/Title';
+import Intro from './Intro/Intro';
+//const SocialProof = () => <div>Social Proof</div>;
+import SocialProof from './SocialProof/SocialProof';
+import Pictures from './Pictures/Pictures';
+// const Pictures = () => <div>Pictures</div>;
+const Video = () => <div>Video</div>;
+const Demo = () => <div>Demo</div>;
+const SocialLinks = () => <div>Social Links</div>;
+
+const Section = ({children}) => (
+  <div style={{padding: 20, background: 'black'}}>{children}</div>
+);
+
+const SectionButtons = ({children}) => (
+  <div style={{
+    padding: 20,
+    textAlign: 'right',
+  }}>{children}</div>
+);
+
+const bs = {
+  container: {
+    background: 'hsla(0, 100%, 100%, 0.5)',
+    display: 'flex',
+  },
+  cell: {
+    background: 'white',
+  }
+};
+
 export default class Home extends Component {
   render() {
-    const styles = require('./Home.scss');
+    //const _s = styles;
     // require the logo image both from client and server
     const logoImage = require('./logo.png');
+          // <SubTitle className={_s.subTitle}>Others reckon it&quot;s good</SubTitle>
+
     return (
-      <div className={styles.home}>
+      <div className={styles.this}>
+        <Title />
+        <Intro />
+        <SocialProof />
+        <Pictures />
+        <Video />
+        <Demo />
+        <SocialLinks />
+        <div className={styles.section + ' ' + styles.whatItIs}>
+        </div>
+        <div style={{padding: 20, background: '#f6f6f6'}}>
+          <Card>
+            <div style={{background: 'hsl(0,50%,50%)'}}>header</div>
+            <CardHeader
+              title="Title"
+              subtitle="Subtitle"
+              avatar={<Avatar>A</Avatar>}/>
+            <CardHeader
+              title="Demo Url Based Avatar"
+              subtitle="Subtitle"
+              avatar="http://lorempixel.com/100/100/nature/"/>
+            <CardMedia overlay={<CardTitle title="Title" subtitle="Subtitle"/>}>
+              <img src="http://lorempixel.com/600/337/nature/"/>
+            </CardMedia>
+            <CardTitle title="Title" subtitle="Subtitle"/>
+            <CardActions style={{textAlign: 'right'}}>
+              <FlatButton label="Action1" primary />
+              <FlatButton label="Action2" primary />
+            </CardActions>
+            <CardText>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+            </CardText>
+          </Card>
+        </div>
+
+        {/*
+          <div className="containerz">
+            <div className="cellz">1 long long long long long long long long long long long long long long long long long long long long long long long long long long long long</div>
+            <div className="cellz">2</div>
+            <div className="cellz">3</div>
+          </div>
+
+          <div className="box box--space-20" style={{color: 'black', backgroundColor: 'blue', border: '1px solid red', width: 400}}>
+            <div className="cellz">
+              <div className="innerCellz">
+                1 long long long long long ish
+              </div>
+            </div>
+            <div className="cellz">
+              <div className="innerCellz">
+                2
+              </div>
+            </div>
+            <div className="cellz">
+              <div className="innerCellz">
+                3
+              </div>
+            </div>
+          </div>
+
+          <div className="box" style={{color: 'black', backgroundColor: 'blue', border: '1px solid red', width: 400}}>
+            <div className="cellz">
+              <div className="innerCellz">
+                1 long long long long long ish
+              </div>
+            </div>
+            <div className="cellz">
+              <div className="innerCellz">
+                2
+              </div>
+            </div>
+            <div className="cellz">
+              <div className="innerCellz">
+                3
+              </div>
+            </div>
+          </div>
+
+          <div className="box box--space-20 box--even" style={{color: 'black', backgroundColor: 'blue', border: '1px solid red', width: 400}}>
+            <div className="cellz">
+              <div className="innerCellz">
+                1 long long long long long ish
+              </div>
+            </div>
+            <div className="cellz">
+              <div className="innerCellz">
+                2
+              </div>
+            </div>
+            <div className="cellz">
+              <div className="innerCellz">
+                3
+              </div>
+            </div>
+          </div>
+
+          <div className="box box--space-20" style={{color: 'black', backgroundColor: 'blue', border: '1px solid red', width: 400}}>
+            <div className="cellz width--1-2">
+              <div className="innerCellz">
+                1 long long long long long ish
+              </div>
+            </div>
+            <div className="cellz width--1-4">
+              <div className="innerCellz">
+                2
+              </div>
+            </div>
+            <div className="cellz width--1-4">
+              <div className="innerCellz">
+                3
+              </div>
+            </div>
+          </div>
+        */}
+
+
         <div className={styles.masthead}>
           <div className="container">
             <div className={styles.logo}>
@@ -45,7 +257,6 @@ export default class Home extends Component {
             </p>
           </div>
         </div>
-
         <div className="container">
           <div className={styles.counterContainer}>
             <CounterButton multireducerKey="counter1"/>
@@ -109,7 +320,7 @@ export default class Home extends Component {
             <dt>Server-side data loading</dt>
             <dd>
               The <Link to="/widgets">Widgets page</Link> demonstrates how to fetch data asynchronously from
-              some source that is needed to complete the server-side rendering. <code>Widgets.js</code>'s
+              some source that is needed to complete the server-side rendering. <code>Widgets.js</code>&quot;s
               <code>fetchData()</code> function is called before the widgets page is loaded, on either the server
               or the client, allowing all the widget data to be loaded and ready for the page to render.
             </dd>
@@ -129,7 +340,7 @@ export default class Home extends Component {
             <dd>
               After you log in, you will be redirected to a Login Success page. This <strike>magic</strike> logic
               is performed in <code>componentWillReceiveProps()</code> in <code>App.js</code>, but it could
-              be done in any component that listens to the appropriate store slice, via Redux's <code>@connect</code>,
+              be done in any component that listens to the appropriate store slice, via Redux&quot;s <code>@connect</code>,
               and pulls the router from the context.
             </dd>
             <dt>Auth-required views</dt>
@@ -158,7 +369,7 @@ export default class Home extends Component {
             I cobbled this together from a wide variety of similar "starter" repositories. As I post this in June 2015,
             all of these libraries are right at the bleeding edge of web development. They may fall out of fashion as
             quickly as they have come into it, but I personally believe that this stack is the future of web development
-            and will survive for several years. I'm building my new projects like this, and I recommend that you do,
+            and will survive for several years. I&quot;m building my new projects like this, and I recommend that you do,
             too.
           </p>
 
@@ -166,6 +377,60 @@ export default class Home extends Component {
 
           <p>– Erik Rasmussen</p>
         </div>
+
+        <div style={{padding: 20, background: '#f6f6f6'}}>
+          <Card>
+            <div style={{background: 'hsl(0,50%,50%)'}}>header</div>
+            <CardHeader
+              title="Title"
+              subtitle="Subtitle"
+              avatar={<Avatar>A</Avatar>}/>
+            <CardHeader
+              title="Demo Url Based Avatar"
+              subtitle="Subtitle"
+              avatar="http://lorempixel.com/100/100/nature/"/>
+            <CardMedia overlay={<CardTitle title="Title" subtitle="Subtitle"/>}>
+              <img src="http://lorempixel.com/600/337/nature/"/>
+            </CardMedia>
+            <CardTitle title="Title" subtitle="Subtitle"/>
+            <CardActions style={{textAlign: 'right'}}>
+              <FlatButton label="Action1" primary />
+              <FlatButton label="Action2" primary />
+            </CardActions>
+            <CardText>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+            </CardText>
+          </Card>
+        </div>
+
+        <RaisedButton label="Default" primary />
+
+
+        <List>
+          <ListItem primaryText="Inbox" leftIcon={<ContentInbox />} />
+          <ListItem primaryText="Starred" leftIcon={<ActionGrade />} />
+          <ListItem primaryText="Sent mail" leftIcon={<ContentSend />} />
+          <ListItem primaryText="Drafts" leftIcon={<ContentDrafts />} />
+          <ListItem primaryText="Inbox" leftIcon={<ContentInbox />} />
+        </List>
+        <ListDivider />
+        <List>
+          <ListItem primaryText="All mail" rightIcon={<ActionInfo />} />
+          <ListItem primaryText="Trash" rightIcon={<ActionInfo />} />
+          <ListItem primaryText="Spam" rightIcon={<ActionInfo />} />
+          <ListItem primaryText="Follow up" rightIcon={<ActionInfo />} />
+        </List>
+
+
+        <IconButton tooltip="Star" touch>
+          <ActionGrade/>
+        </IconButton>
+
+        <RefreshIndicator size={40} left={80} top={5} status="loading" />
+        <RefreshIndicator size={40} left={80} top={5} loadingColor={"#FF9800"} status="loading" />
       </div>
     );
   }

@@ -1,0 +1,25 @@
+//@import "../../theme/variables.scss";
+
+// could potentially flatten out to allow using independently
+
+.this {
+  padding: 20px;
+
+  .title {
+    font-weight: 200;
+    text-align: center;
+    text-transform: uppercase;
+    font-size:18px;
+    line-height:120%;
+    color:rgba(255,255,255,0.5);
+  }
+
+  .buttons {
+    text-align: right;
+
+    .button {
+      text-transform: uppercase;
+      padding: 10px;
+    }
+  }
+}
