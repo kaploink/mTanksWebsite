@@ -1,20 +1,20 @@
 import React, {Component, PropTypes} from 'react';
-import DocumentMeta from 'react-document-meta';
+import Helmet from 'react-helmet';
 import {connect} from 'react-redux';
 import * as widgetActions from 'redux/modules/widgets';
 import {isLoaded, load as loadWidgets} from 'redux/modules/widgets';
 import {initializeWithKey} from 'redux-form';
-import connectData from 'helpers/connectData';
 import { WidgetForm } from 'components';
-import config from '../../config';
+import { asyncConnect } from 'redux-async-connect';
 
-function fetchDataDeferred(getState, dispatch) {
-  if (!isLoaded(getState())) {
-    return dispatch(loadWidgets());
+@asyncConnect([{
+  deferred: true,
+  promise: ({store: {dispatch, getState}}) => {
+    if (!isLoaded(getState())) {
+      return dispatch(loadWidgets());
+    }
   }
-}
-
-@connectData(null, fetchDataDeferred)
+}])
 @connect(
   state => ({
     widgets: state.widgets.data,
@@ -32,7 +32,7 @@ export default class Widgets extends Component {
     editing: PropTypes.object.isRequired,
     load: PropTypes.func.isRequired,
     editStart: PropTypes.func.isRequired
-  }
+  };
 
   render() {
     const handleEdit = (widget) => {
@@ -53,11 +53,12 @@ export default class Widgets extends Component {
             <i className={refreshClassName}/> {' '} Reload Widgets
           </button>
         </h1>
-        <DocumentMeta title={config.app.title + ': Widgets'}/>
+        <Helmet title="Widgets"/>
         <p>
           If you hit refresh on your browser, the data loading will take place on the server before the page is returned.
           If you navigated here from another page, the data was fetched from the client after the route transition.
-          This uses the static method <code>fetchDataDeferred</code>. To block a route transition until some data is loaded, use <code>fetchData</code>.
+          This uses the decorator method <code>@asyncConnect</code> with the <code>deferred: true</code> flag. To block
+          a route transition until some data is loaded, remove the <code>deffered: true</code> flag.
           To always render before loading data, even on the server, use <code>componentDidMount</code>.
         </p>
         <p>

@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 
 import { CounterButton, GithubButton } from 'components';
 import config from '../../config';
+import Helmet from 'react-helmet';
 
 // 3rd party components
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -104,6 +105,7 @@ export default class Home extends Component {
 
     return (
       <div className={styles.this}>
+        <Helmet title="Home"/>
         <Title />
         <Intro />
         <SocialProof />
@@ -321,7 +323,7 @@ export default class Home extends Component {
             <dd>
               The <Link to="/widgets">Widgets page</Link> demonstrates how to fetch data asynchronously from
               some source that is needed to complete the server-side rendering. <code>Widgets.js</code>&quot;s
-              <code>fetchData()</code> function is called before the widgets page is loaded, on either the server
+              <code>asyncConnect()</code> function is called before the widgets page is loaded, on either the server
               or the client, allowing all the widget data to be loaded and ready for the page to render.
             </dd>
             <dt>Data loading errors</dt>

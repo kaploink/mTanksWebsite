@@ -2,30 +2,34 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, NavBrand, Nav, NavItem, CollapsibleNav } from 'react-bootstrap';
-import DocumentMeta from 'react-document-meta';
+import Navbar from 'react-bootstrap/lib/Navbar';
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
+import Helmet from 'react-helmet';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 import { InfoBar } from 'components';
-import { pushState } from 'redux-router';
-import connectData from 'helpers/connectData';
+import { push } from 'react-router-redux';
 import config from '../../config';
+import { asyncConnect } from 'redux-async-connect';
 
-function fetchData(getState, dispatch) {
-  const promises = [];
-  if (!isInfoLoaded(getState())) {
-    promises.push(dispatch(loadInfo()));
-  }
-  if (!isAuthLoaded(getState())) {
-    promises.push(dispatch(loadAuth()));
-  }
-  return Promise.all(promises);
-}
+@asyncConnect([{
+  promise: ({store: {dispatch, getState}}) => {
+    const promises = [];
 
-@connectData(fetchData)
+    if (!isInfoLoaded(getState())) {
+      promises.push(dispatch(loadInfo()));
+    }
+    if (!isAuthLoaded(getState())) {
+      promises.push(dispatch(loadAuth()));
+    }
+
+    return Promise.all(promises);
+  }
+}])
 @connect(
   state => ({user: state.auth.user}),
-  {logout, pushState})
+  {logout, pushState: push})
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -41,33 +45,37 @@ export default class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.pushState(null, '/loginSuccess');
+      this.props.pushState('/loginSuccess');
     } else if (this.props.user && !nextProps.user) {
       // logout
-      this.props.pushState(null, '/');
+      this.props.pushState('/');
     }
   }
 
   handleLogout = (event) => {
     event.preventDefault();
     this.props.logout();
-  }
+  };
 
   render() {
     const {user} = this.props;
     const styles = require('./App.scss');
+
     return (
       <div className={styles.app}>
-        <DocumentMeta {...config.app}/>
-        <Navbar fixedTop toggleNavKey={0}>
-          <NavBrand>
-            <IndexLink to="/" activeStyle={{color: '#33e0ff'}}>
-              <div className={styles.brand}/>
-              <span>{config.app.title}</span>
-            </IndexLink>
-          </NavBrand>
+        <Helmet {...config.app.head}/>
+        <Navbar fixedTop>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <IndexLink to="/" activeStyle={{color: '#33e0ff'}}>
+                <div className={styles.brand}/>
+                <span>{config.app.title}</span>
+              </IndexLink>
+            </Navbar.Brand>
+            <Navbar.Toggle/>
+          </Navbar.Header>
 
-          <CollapsibleNav eventKey={0}>
+          <Navbar.Collapse eventKey={0}>
             <Nav navbar>
               {user && <LinkContainer to="/chat">
                 <NavItem eventKey={1}>Chat</NavItem>
@@ -96,12 +104,12 @@ export default class App extends Component {
             </Nav>
             {user &&
             <p className={styles.loggedInMessage + ' navbar-text'}>Logged in as <strong>{user.name}</strong>.</p>}
-            <Nav navbar right>
+            <Nav navbar pullRight>
               <NavItem eventKey={1} target="_blank" title="View on Github" href="https://github.com/erikras/react-redux-universal-hot-example">
                 <i className="fa fa-github"/>
               </NavItem>
             </Nav>
-          </CollapsibleNav>
+          </Navbar.Collapse>
         </Navbar>
 
         <div className={styles.appContent}>
