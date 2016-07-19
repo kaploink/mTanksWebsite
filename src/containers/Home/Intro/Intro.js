@@ -14,11 +14,11 @@ const _s = require('./Intro.scss');
 
 const Intro = () =>
   <Section className={_s.this}>
-    <Title>What it is</Title>
+    {/*<Title>What it is</Title>*/}
     <p className={_s.description}>mTanks II Arena is a high-speed multiplayer RTS/FPS/racer with a focus on core gameplay and community-engineered maps</p>
-    <Buttons>
+    {/*<Buttons>
       <FlatButton linkButton href="/intro" label="More intro >" secondary backgroundColor="none" />
-    </Buttons>
+    </Buttons>*/}
   </Section>
 ;
 

@@ -8,6 +8,7 @@ import { CounterButton, GithubButton } from 'components';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
+
 // 3rd party components
 import RaisedButton from 'material-ui/lib/raised-button';
 //import FlatButton from 'material-ui/lib/flat-button';
@@ -67,6 +68,7 @@ const FlatButton = ({children}) => (
 // child components
 import Title from './Title/Title';
 import Intro from './Intro/Intro';
+import Ingredients from './Ingredients/Ingredients';
 //const SocialProof = () => <div>Social Proof</div>;
 import SocialProof from './SocialProof/SocialProof';
 import Pictures from './Pictures/Pictures';
@@ -108,6 +110,11 @@ export default class Home extends Component {
         <Helmet title="Home"/>
         <Title />
         <Intro />
+        <Ingredients/>
+        <div>
+          menu...
+        </div>
+
         <SocialProof />
         <Pictures />
         <Video />

@@ -1,0 +1,51 @@
+@import "../../../theme/variables.scss";
+
+:local .this {
+
+  .description {
+    font-size:18px;
+    color:rgb(255,255,255);
+    text-align:center;
+    font-weight: 100;
+    text-shadow: none;
+    padding: 30px;
+    color: #276a8e;
+    color: #44738c;
+    font-size: 24px;
+  }
+
+  .background {
+  }
+
+  .title {
+
+  }
+
+  .item {
+    &__title {
+      font-size: 24px;
+      text-align: center;
+      color: #b3ef02;
+      font-family: 'courier new';
+      border-bottom: 1px dashed #032435;
+    }
+
+    &__points {
+      font-size: 16px;
+      text-align: center;
+      text-shadow: none;
+      color: #276a8e;
+    }
+
+    &__influence {
+      font-size: 12px;
+      text-align: center;
+      text-shadow: none;
+      color: rgba(#276a8e, 0.5);
+    }
+  }
+
+  // @media (min-width: 768px) {
+
+  // }
+}

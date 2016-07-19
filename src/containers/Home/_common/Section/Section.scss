@@ -3,7 +3,7 @@
 // could potentially flatten out to allow using independently
 
 .this {
-  padding: 20px;
+  padding: 60px 20px;
 
   .title {
     font-weight: 200;
@@ -12,6 +12,9 @@
     font-size:18px;
     line-height:120%;
     color:rgba(255,255,255,0.5);
+    color: #b3ef02;
+    font-family: 'courier new';
+    font-size: 48px;
   }
 
   .buttons {
